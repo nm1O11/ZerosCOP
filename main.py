@@ -3,16 +3,17 @@ from MinRep import *
 
 def main():
     #matrix1 = np.array([[0, 0, 1, 1, 1], [0, 0, 1, 1, 1], [1, 1, 0, 0, 1], [1, 1, 0, 0, 1], [1, 1, 1, 1, 1]])
-    #print(cliqueM(matrix1))
+    #cliqueM(matrix1)
 
     #matrix2 = np.array([[1, -1, 1, 1, -1], [-1, 1, -1, 1, 1], [1, -1, 1, -1, 1], [1, 1, -1, 1, -1], [-1, 1, 1, -1, 1]]) #horn-matrix
-    #print(cliqueM(matrix2))
+    #cliqueM(matrix2)
 
     #matrix3 = np.array([[1, -1, 1, 1, -1], [-1, 1, -1, 1, 1.5], [1, -1, 1, -0.5, 1.5], [1, 1, -0.5, 1, -1], [-1, 1.5, 1.5, -1, 1]]) 
-    #print(cliqueM(matrix3))
+    #cliqueM(matrix3)
 
-    for i in range(100):
-        n = np.random.randint(10, 20)
+    for i in range(5):
+        n = np.random.randint(5, 10)
         matrix = radnomCOP(n)
+        print(matrix)
         cliqueM(matrix)
 main()

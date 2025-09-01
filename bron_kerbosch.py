@@ -1,5 +1,6 @@
 #from datetime import datetime
 import numpy as np
+from AuxiliarC import *
 '''
 ---utilizar os steps do artigo (1971)
 graph - grafo completo (dicionário, keys - vertices, graph[key] - vizinhança (vertices que estão ligados a key))
@@ -25,9 +26,3 @@ def bron_kerbosch(graph, p, r=None, x=None, cliques=None):
             p.remove(v)
             x.add(v)
     return list(map(set, set(frozenset(c) for c in cliques)))
-
-def adj_to_set(graph):
-    set_graph = dict()
-    for line in range(len(graph)):
-        set_graph[line+1] = set([viz+1 for viz in range(len(graph[line])) if graph[line, viz] == 1])
-    return set_graph

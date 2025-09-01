@@ -1,10 +1,9 @@
 # Algorithm for constricting the set P(j) contain in P, j in V.
 from AuxiliarC import *
+from Print import *
 from itertools import combinations
 import numpy as np
 import scipy as sc
-import pandas as pd
-import csv 
 
 def condA(P, COP): #rank(COP(P)) = |P|-1
     COP_P = sub_matrix(COP, P)
@@ -22,43 +21,6 @@ def condB(P, COP): # E t(P): COP(P)t(P) = 0, t(P)>0, ||t(P)||1 = 1
         tP = -tP
         return True
     else: return False
-
-#def printP(COP, P, deltaI, allP, allXP):         SALVAR COMO TXT
-#    with open("Resolts.txt", "a") as file:
-#        file.write(f"\n\nMatrix:")
-#        for line in COP:
-#            file.write(f"\n{line}")
-#        for i in P:
-#            file.write(f"\n-> delta_I{i}: {deltaI[i]}")
-#            for j in allP[i]:
-#                if j==1: file.write(f"\n-> P({i},{j}): {allP[i][j]}")
-#                else: file.write(f" P({i},{j}): {allP[i][j]}")
-#            for j in allP[i]:
-#                if j==1: file.write(f"\n-> X_P({i},{j}): {allXP[i][j]}")
-#                else: file.write(f" X_P({i},{j}): {allXP[i][j]}")
-#    return True
-
-def printP(COP, P, deltaI, allP, allXP, writer=pd.ExcelWriter("resultados.xlsx", engine="openpyxl")): #SALVAR COMO CVS
-    df_COP = pd.DataFrame(COP)
-    df_COP.to_excel(writer, sheet_name="COP", index=False)
-
-    df_deltaI = pd.DataFrame([(i, list(deltaI[i])) for i in P], columns=["i", "deltaI[i]"])
-    df_deltaI.to_excel(writer, sheet_name="deltaI", index=False)
-
-    rows_P = []
-    for i in P:
-        for j in allP[i]:
-            rows_P.append((i, j, list(allP[i][j])))
-    df_allP = pd.DataFrame(rows_P, columns=["i", "j", "P(i,j)"])
-    df_allP.to_excel(writer, sheet_name="allP", index=False)
-
-    rows_XP = []
-    for i in P:
-        for j in allXP[i]:
-            rows_XP.append((i, j, list(allXP[i][j])))
-    df_allXP = pd.DataFrame(rows_XP, columns=["i", "j", "X_P(i,j)"])
-    df_allXP.to_excel(writer, sheet_name="allXP", index=False)
-    return True
 
 def findP(COP):
     #STEP 1
@@ -98,21 +60,6 @@ def findP(COP):
 
     #printP(COP, P, deltaI, allP, allXP)
     return P, deltaI, allXP
-
-#def printT(J, tau):         SALVAR COMO TXT
-#    with open("Resolts.txt", "a") as file:
-#        file.write(f"\nJ: {J}\nZeros: ")
-#        for zero in tau:
-#            file.write(f"{tau[zero]} ")
-#    return True
-
-def printT(J, tau, writer=pd.ExcelWriter("resultados.xlsx", engine="openpyxl")):  #SLAVAR COMO CVS
-    df_J = pd.DataFrame(sorted(J), columns=["J"])
-    df_J.to_excel(writer, sheet_name="J", index=False)
-
-    df_tau = pd.DataFrame([(k, list(tau[k])) for k in tau], columns=["Index", "Tau"])
-    df_tau.to_excel(writer, sheet_name="Tau", index=False)
-    return True
 
 def findTau(deltaI, allXP):
     J = {i for i in range(91, sum([len(deltaI[i]) for i in deltaI if deltaI[i]!=set()])+1)}
